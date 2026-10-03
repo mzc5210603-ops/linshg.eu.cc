@@ -84,6 +84,25 @@ body{background:var(--bg);color:var(--ink);overflow-x:hidden;
 #btnPick{animation:rise .6s .34s ease both}
 .qs-sizes{margin-top:36px;animation:rise .6s .42s ease both}
 .qs-sizes label{font-family:var(--mono);font-size:10px;color:var(--faint);letter-spacing:3px}
+
+/* ---------- 特性介绍 ---------- */
+.qs-features{margin-top:56px;animation:rise .6s .5s ease both}
+.qf-head{display:flex;align-items:center;gap:16px;justify-content:center;
+  font-size:13px;letter-spacing:6px;color:var(--dim)}
+.qf-line{display:inline-block;width:70px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--line));}
+.qf-line:last-child{background:linear-gradient(90deg,var(--line),transparent)}
+.qf-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:24px;text-align:left}
+.qf-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-md);
+  padding:22px 20px;transition:.2s;position:relative;overflow:hidden}
+.qf-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;
+  background:linear-gradient(180deg,var(--accent),transparent)}
+.qf-card:hover{border-color:rgba(255,77,46,.5);transform:translateY(-3px)}
+.qf-card svg{color:var(--accent)}
+.qf-card b{display:block;font-size:14.5px;letter-spacing:2px;margin-top:12px}
+.qf-card em{display:block;font-style:normal;font-size:11.5px;color:var(--faint);
+  margin-top:8px;line-height:1.8}
+@media (max-width:560px){.qf-grid{grid-template-columns:1fr}}
 .chips{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-top:14px}
 .chip{border:1px solid var(--line);background:var(--panel);color:var(--dim);cursor:pointer;
   padding:8px 16px;border-radius:999px;font-size:12.5px;transition:.16s;letter-spacing:1px}
