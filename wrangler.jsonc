@@ -2,7 +2,7 @@
   "name": "cunyin",
   "account_id": "85776397fdff1ea8c2ea8919dc3eb3d7",
   "compatibility_date": "2025-01-01",
-  "assets": { "directory": "./public" },
+  "assets": { "directory": "./" },
   "routes": [
     { "pattern": "cunyin.5210603.xyz", "custom_domain": true }
   ]
