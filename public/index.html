@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>寸印 · 证件照排版打印</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header id="bar">
+  <div class="logo">
+    <span class="logo-mark"></span>
+    <span class="logo-name">寸印</span>
+    <span class="logo-en">CUNYIN</span>
+  </div>
+  <div class="bar-actions">
+    <span class="meta" id="barMeta">IDLE</span>
+    <button class="btn ghost" id="btnPrint" disabled>打印</button>
+    <button class="btn solid" id="btnDownload" disabled>下载相纸</button>
+  </div>
+</header>
+
+<main id="stage">
+
+  <!-- 左：预览 -->
+  <section class="preview">
+    <div id="dropZone">
+      <div class="dz-inner">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.8"/><path d="M21 15l-5-5-9 9"/></svg>
+        <p>拖入照片，或点击选择</p>
+        <p class="sub">JPG / PNG · 全程本地处理</p>
+      </div>
+      <input type="file" id="fileInput" accept="image/*" hidden>
+    </div>
+    <div id="workbench" hidden>
+      <div class="sheet-wrap">
+        <div class="sheet-ruler top" id="rulerTop"></div>
+        <div class="sheet-row">
+          <div class="sheet-ruler left" id="rulerLeft"></div>
+          <canvas id="sheetCanvas"></canvas>
+        </div>
+        <div class="sheet-caption" id="sheetCaption"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 右：控制 -->
+  <aside class="panel">
+
+    <div class="blk" id="blkPhoto">
+      <div class="blk-head"><span class="no">01</span><h2>取景</h2><span class="fname" id="fName"></span></div>
+      <div class="finder" id="finder">
+        <canvas id="finderCanvas"></canvas>
+        <div class="finder-grid"></div>
+        <div class="finder-mask" id="finderMask"></div>
+        <div class="finder-hint" id="finderHint">拖动调整位置 · 滚轮缩放</div>
+      </div>
+      <div class="row">
+        <button class="mini" id="btnZoomOut">−</button>
+        <input type="range" id="zoomRange" min="0.05" max="1" step="0.001" value="0.5">
+        <button class="mini" id="btnZoomIn">＋</button>
+        <button class="mini wide" id="btnRot">旋转 90°</button>
+      </div>
+      <div class="row">
+        <button class="mini wide" id="btnRePick">重选照片</button>
+      </div>
+    </div>
+
+    <div class="blk">
+      <div class="blk-head"><span class="no">02</span><h2>规格</h2></div>
+      <div class="size-grid" id="sizeGrid"></div>
+      <div class="spec-read" id="specRead"></div>
+    </div>
+
+    <div class="blk">
+      <div class="blk-head"><span class="no">03</span><h2>相纸</h2></div>
+      <div class="size-grid" id="paperGrid"></div>
+      <div class="row gapctl">
+        <label>间距</label>
+        <input type="range" id="gapRange" min="0" max="5" step="0.5" value="1.5">
+        <span class="mono" id="gapVal">1.5 mm</span>
+      </div>
+      <div class="row">
+        <label>裁切线</label>
+        <button class="mini seg on" id="btnCutOn">显示</button>
+        <button class="mini seg" id="btnCutOff">隐藏</button>
+      </div>
+    </div>
+
+  </aside>
+</main>
+
+<div id="toast" class="toast"></div>
+<div id="printArea"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
