@@ -191,6 +191,9 @@
     if (tDur) tDur.textContent = fmt(video.duration);
   });
   video.addEventListener('timeupdate', function () {
+    // 兜底：画面在正常前进（有缓冲数据）时强制隐藏 loading，
+    // 避免 waiting 事件后未再触发 playing 导致转圈一直显示
+    if (started && !video.paused && video.readyState >= 3) setLoading(false);
     if (!video.duration) return;
     var p = video.currentTime / video.duration * 100;
     if (played) played.style.width = p + '%';
