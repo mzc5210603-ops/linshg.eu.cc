@@ -210,8 +210,8 @@ function detail(D, it) {
     body: body,
     jsonld: jsonld,
     scripts: '<script type="application/json" id="srcData">' + JSON.stringify(data).replace(/</g, '\\u003c') + '</script>'
-      + '<script src="/js/hls.min.js" defer></script>'
-      + '<script src="/js/player.js" defer></script>'
+    + '<script src="/js/hls.min.js?v=' + global.BUILD_VER + '" defer></script>'
+    + '<script src="/js/player.js?v=' + global.BUILD_VER + '" defer></script>'
       + '<script src="/js/app.js" defer></script>'
   });
 }

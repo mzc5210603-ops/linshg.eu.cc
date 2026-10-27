@@ -42,7 +42,7 @@ function head(o) {
     + og
     + (o.noindex ? '<meta name="robots" content="noindex,follow">' : '')
     + '<link rel="icon" href="/favicon.svg" type="image/svg+xml">'
-    + '<link rel="stylesheet" href="/css/style.css">'
+    + '<link rel="stylesheet" href="/css/style.css?v=' + global.BUILD_VER + '">'
     + ld
     + '</head><body data-page="' + esc(o.page || '') + '">';
 }
@@ -121,7 +121,8 @@ function searchModal() {
 }
 
 function scripts() {
-  return '<script src="/js/app.js" defer></script>';
+  var v = '?v=' + global.BUILD_VER;
+  return '<script src="/js/app.js' + v + '" defer></script>';
 }
 
 function page(o) {

@@ -40,6 +40,9 @@ function copyDir(src, dst) {
   }
 }
 
+/* 版本号：注入到页面里 js/css 的引用上，每次构建变化，强制浏览器拉新 */
+global.BUILD_VER = Math.floor(Date.now() / 1000).toString(36);
+
 /* ---------- 清空输出（失败则直接覆盖，不中断） ---------- */
 if (fs.existsSync(OUT)) {
   try {

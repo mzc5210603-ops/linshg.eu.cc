@@ -50,6 +50,20 @@
     if (loading) loading.hidden = !on;
   }
 
+  var loadingTimer = null;
+  /* 短暂缓冲不闪转圈：waiting 后延迟 600ms 仍未恢复才显示 */
+  function showLoadingSoon() {
+    if (loadingTimer) return;
+    loadingTimer = setTimeout(function () {
+      loadingTimer = null;
+      setLoading(true);
+    }, 600);
+  }
+  function hideLoading() {
+    if (loadingTimer) { clearTimeout(loadingTimer); loadingTimer = null; }
+    setLoading(false);
+  }
+
   function destroyHls() {
     if (hls) { try { hls.destroy(); } catch (e) { } hls = null; }
   }
@@ -183,9 +197,9 @@
     player.classList.add('paused');
     pToggle.innerHTML = '<svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg>';
   });
-  video.addEventListener('waiting', function () { setLoading(true); });
-  video.addEventListener('playing', function () { setLoading(false); });
-  video.addEventListener('canplay', function () { setLoading(false); });
+  video.addEventListener('waiting', showLoadingSoon);
+  video.addEventListener('playing', hideLoading);
+  video.addEventListener('canplay', hideLoading);
   video.addEventListener('loadedmetadata', function () {
     setLoading(false);
     if (tDur) tDur.textContent = fmt(video.duration);
@@ -193,7 +207,7 @@
   video.addEventListener('timeupdate', function () {
     // 兜底：画面在正常前进（有缓冲数据）时强制隐藏 loading，
     // 避免 waiting 事件后未再触发 playing 导致转圈一直显示
-    if (started && !video.paused && video.readyState >= 3) setLoading(false);
+    if (started && !video.paused && video.readyState >= 3) hideLoading();
     if (!video.duration) return;
     var p = video.currentTime / video.duration * 100;
     if (played) played.style.width = p + '%';
