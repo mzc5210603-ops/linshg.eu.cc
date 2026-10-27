@@ -1,0 +1,16 @@
+# 含服务器凭据的运维脚本，严禁入库
+_tools/
+_shots/
+.codebuddy/
+
+# 构建产物（CI 里生成）
+public/
+
+node_modules/
+__pycache__/
+*.pyc
+.playwright-cli/
+*.tar.gz
+
+Thumbs.db
+Desktop.ini
