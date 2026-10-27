@@ -1,12 +1,12 @@
 'use strict';
 
 module.exports = {
-  brand: '半帧',
-  brandEn: 'HALFFRAME',
+  brand: '在线影视观看',
+  brandEn: '',
   // 部署到自定义域名后改这里（影响 canonical / sitemap）
   domain: 'https://halframe.pages.dev',
-  title: '半帧 HALFFRAME · 在线影视',
-  desc: '半帧 HALFFRAME 在线影视库，收录电影、剧集、综艺、动漫、纪录片与短剧，高清在线播放。',
+  title: '在线影视观看 · 免费高清电影剧集',
+  desc: '在线影视观看，免费收录电影、剧集、综艺、动漫、纪录片与短剧，高清在线播放，每日更新。',
   perPage: 60,
   // 首页各区块展示数量
   homeRows: 18,
