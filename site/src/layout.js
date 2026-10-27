@@ -58,7 +58,7 @@ function header(active) {
     + '<span class="brand-t">' + esc(cfg.brand) + '</span>'
     + '<span class="brand-en">' + esc(cfg.brandEn) + '</span>'
     + '</a>'
-    + '<nav class="nav" id="nav">' + cats + '<a href="/top.html">榜单</a></nav>'
+    + '<nav class="nav" id="nav">' + cats + '<a href="/top">榜单</a></nav>'
     + '<div class="hd-act">'
     + '<button class="ibtn" id="btnSearch" aria-label="搜索">' + icon('search') + '</button>'
     + '<button class="ibtn only-m" id="btnMenu" aria-label="菜单">' + icon('menu') + '</button>'
@@ -72,7 +72,7 @@ function footer(data) {
   return '<footer class="ft"><div class="wrap ft-in">'
     + '<div class="ft-brand"><span class="brand-mark"><i></i><i></i></span>'
     + '<b>' + esc(cfg.brand) + '</b><em>' + esc(cfg.brandEn) + '</em></div>'
-    + '<div class="ft-links">' + cols + '<a href="/top.html">榜单</a></div>'
+    + '<div class="ft-links">' + cols + '<a href="/top">榜单</a></div>'
     + '<a class="ft-top" href="#">回到顶部</a>'
     + '</div></footer>'
     + '<nav class="tabbar">'
@@ -93,7 +93,7 @@ function card(it, opt) {
     : (it.total > 1 ? '<span class="badge">全' + it.total + '集</span>' : '');
   const score = it.score >= 1 ? '<span class="score">' + it.score.toFixed(1) + '</span>' : '';
   const meta = [it.year, it.area].filter(Boolean).join(' · ');
-  return '<a class="card' + (opt.lg ? ' lg' : '') + '" href="/v/' + it.id + '.html" title="' + esc(it.name) + '">'
+  return '<a class="card' + (opt.lg ? ' lg' : '') + '" href="/v/' + it.id + '" title="' + esc(it.name) + '">'
     + '<div class="poster">' + pic + badge + score + '<span class="ply">' + icon('play') + '</span></div>'
     + '<h3 class="ct">' + esc(it.name) + '</h3>'
     + '<p class="cm">' + esc(meta || it.tname) + '</p>'

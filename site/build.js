@@ -40,8 +40,14 @@ function copyDir(src, dst) {
   }
 }
 
-/* ---------- 清空输出 ---------- */
-if (fs.existsSync(OUT)) fs.rmSync(OUT, { recursive: true, force: true });
+/* ---------- 清空输出（失败则直接覆盖，不中断） ---------- */
+if (fs.existsSync(OUT)) {
+  try {
+    fs.rmSync(OUT, { recursive: true, force: true });
+  } catch (e) {
+    console.log('提示：输出目录未能清空，将直接覆盖同名文件');
+  }
+}
 ensure(OUT);
 
 /* ---------- 数据 ---------- */
@@ -87,17 +93,17 @@ function url(u, pri, freq) {
 }
 let sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
 sm += url('/', '1.0', 'daily');
-sm += url('/top.html', '0.8', 'daily');
+sm += url('/top', '0.8', 'daily');
 cfg.mainCats.forEach(function (m) { sm += url('/c/' + m.id + '/', '0.9', 'daily'); });
 D.byNew.forEach(function (it) {
-  sm += '<url><loc>' + cfg.domain + '/v/' + it.id + '.html</loc>'
+  sm += '<url><loc>' + cfg.domain + '/v/' + it.id + '</loc>'
     + '<lastmod>' + new Date(it.time * 1000).toISOString().slice(0, 10) + '</lastmod>'
     + '<changefreq>weekly</changefreq><priority>0.7</priority></url>';
 });
 sm += '</urlset>';
 writeFile('sitemap.xml', sm);
 
-writeFile('robots.txt', 'User-agent: *\nAllow: /\nDisallow: /search.html\n\nSitemap: ' + cfg.domain + '/sitemap.xml\n');
+writeFile('robots.txt', 'User-agent: *\nAllow: /\nDisallow: /search\n\nSitemap: ' + cfg.domain + '/sitemap.xml\n');
 
 /* ---------- Pages 配置 ---------- */
 writeFile('_headers', [
@@ -115,12 +121,11 @@ writeFile('_headers', [
   ''
 ].join('\n'));
 
-// /v/123 这类无扩展访问改写到静态文件
-writeFile('_redirects', [
-  '/v/:id /v/:id.html 200',
-  '/c/:cat/p:page /c/:cat/p:page.html 200',
-  ''
-].join('\n'));
+// 注意：不要写 /v/:id → /v/:id.html 这类规则，
+// 它会把已带 .html 的详情页也匹配成 xxx.html.html，导致 404。
+// 站内链接一律用无扩展名形式（/v/123、/top、/c/1/p2），
+// Cloudflare Pages 会自动回退到对应的 .html 文件。
+writeFile('_redirects', '# no redirects\n');
 
 /* ---------- 图标 ---------- */
 writeFile('favicon.svg', '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">'

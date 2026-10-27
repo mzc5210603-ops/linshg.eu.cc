@@ -23,7 +23,7 @@ function home(D) {
     + '<h1 class="hero-t">' + esc(hero.name) + '</h1>'
     + '<p class="hero-m">' + esc(metaLine(hero)) + (hero.score >= 1 ? ' <i class="dot"></i> <b>' + hero.score.toFixed(1) + '</b> 分' : '') + '</p>'
     + '<p class="hero-d">' + esc((hero.blurb || hero.content || '').slice(0, 120)) + '</p>'
-    + '<div class="hero-btns"><a class="btn primary" href="/v/' + hero.id + '.html">' + L.icon('play') + ' 立即播放</a>'
+    + '<div class="hero-btns"><a class="btn primary" href="/v/' + hero.id + '">' + L.icon('play') + ' 立即播放</a>'
     + '<a class="btn ghost" href="/c/' + hero.t1 + '/">同类型</a></div>'
     + '</div>'
     + '<ol class="hero-rank">' + top5.map(function (it, i) {
@@ -34,7 +34,7 @@ function home(D) {
     + '</div></section>' : '';
 
   const newRow = L.row('新片速递', 'FRESH RELEASE', D.byNew.slice(0, cfg.homeRows), '/c/1/');
-  const hotRow = L.row('热播榜单', 'TRENDING NOW', D.byHot.slice(0, cfg.homeRows), '/top.html');
+  const hotRow = L.row('热播榜单', 'TRENDING NOW', D.byHot.slice(0, cfg.homeRows), '/top');
   const scoreRow = L.row('高分精选', 'TOP RATED', D.byScore.slice(0, cfg.homeRows), '/top.html?tab=score');
   const seriesRow = D.byCat[2] ? L.row('剧集热播', 'SERIES', D.byCat[2].slice(0, cfg.homeRows), '/c/2/') : '';
   const movieRow = D.byCat[1] ? L.row('电影精选', 'MOVIES', D.byCat[1].slice(0, cfg.homeRows), '/c/1/') : '';
@@ -55,7 +55,7 @@ function home(D) {
       url: cfg.domain,
       potentialAction: {
         '@type': 'SearchAction',
-        target: cfg.domain + '/search.html?q={q}',
+        target: cfg.domain + '/search?q={q}',
         'query-input': 'required name=q'
       }
     }
@@ -80,7 +80,7 @@ function catPage(D, mainId, page, route) {
   const pager = [];
   if (pages > 1) {
     const mk = function (p, label, cls) {
-      const href = p === 1 ? '/c/' + mainId + '/' : '/c/' + mainId + '/p' + p + '.html';
+      const href = p === 1 ? '/c/' + mainId + '/' : '/c/' + mainId + '/p' + p;
       return '<a class="pg ' + (cls || '') + '" href="' + href + '">' + label + '</a>';
     };
     if (cur > 1) pager.push(mk(cur - 1, '上一页'));
@@ -93,7 +93,7 @@ function catPage(D, mainId, page, route) {
     if (cur < pages) pager.push(mk(cur + 1, '下一页'));
   }
 
-  const path = cur === 1 ? '/c/' + mainId + '/' : '/c/' + mainId + '/p' + cur + '.html';
+  const path = cur === 1 ? '/c/' + mainId + '/' : '/c/' + mainId + '/p' + cur;
   const body = '<div class="wrap main">'
     + '<div class="crumb"><a href="/">首页</a><span>/</span><b>' + esc(main ? main.name : '') + '</b></div>'
     + '<div class="cat-hd"><h1>' + esc(main ? main.name : '分类') + '<span class="cat-en">' + esc(main ? main.en : '') + '</span></h1>'
@@ -186,7 +186,7 @@ function detail(D, it) {
     '@context': 'https://schema.org',
     '@type': 'Movie',
     name: it.name,
-    url: cfg.domain + '/v/' + it.id + '.html',
+    url: cfg.domain + '/v/' + it.id,
     image: it.pic ? cfg.domain + it.pic : undefined,
     description: (plot || '').slice(0, 200),
     datePublished: it.year || undefined,
@@ -203,7 +203,7 @@ function detail(D, it) {
     title: it.name + (it.year ? '（' + it.year + '）' : '') + ' 在线观看 - ' + cfg.brand,
     desc: ('《' + it.name + '》' + (it.year ? it.year + '年' : '') + (it.area || '') + (it.tname || '') + '，'
       + (it.actor ? '主演：' + it.actor.slice(0, 40) + '。' : '') + (plot || '').slice(0, 90)).replace(/\s+/g, ' ').slice(0, 155),
-    path: '/v/' + it.id + '.html',
+    path: '/v/' + it.id,
     page: 'detail',
     ogType: 'video.movie',
     ogImage: it.pic ? cfg.domain + it.pic : '',
@@ -234,7 +234,7 @@ function topPage(D) {
   return L.page({
     title: '热播榜单 - ' + cfg.brand + ' ' + cfg.brandEn,
     desc: '热门影视 TOP 100 排行榜，' + cfg.desc,
-    path: '/top.html',
+    path: '/top',
     page: 'top',
     body: body
   });
@@ -250,7 +250,7 @@ function searchPage() {
   return L.page({
     title: '搜索 - ' + cfg.brand,
     desc: '搜索影视资源，' + cfg.desc,
-    path: '/search.html',
+    path: '/search',
     page: 'search',
     body: body,
     noindex: true

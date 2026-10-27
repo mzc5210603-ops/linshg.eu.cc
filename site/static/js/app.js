@@ -125,7 +125,7 @@
           }
           smRes.innerHTML = lastResults.map(function (it) {
             var pic = it[7] ? '<img src="' + it[7] + '" alt="" loading="lazy">' : '';
-            return '<a class="sm-item" href="/v/' + it[0] + '.html">' + pic
+            return '<a class="sm-item" href="/v/' + it[0] + '">' + pic
               + '<span class="si-n">' + esc(it[1]) + '</span>'
               + '<span class="si-m">' + (it[2] || '') + ' · ' + esc(it[5]) + '</span></a>';
           }).join('');
@@ -135,7 +135,7 @@
     smInput.addEventListener('keydown', function (e) {
       if (e.key === 'Enter') {
         e.preventDefault();
-        if (lastResults.length) location.href = '/v/' + lastResults[0][0] + '.html';
+        if (lastResults.length) location.href = '/v/' + lastResults[0][0];
       } else if (e.key === 'Escape') closeSM();
     });
   }
@@ -183,7 +183,7 @@
     var pic = it[7]
       ? '<img src="' + it[7] + '" alt="' + esc(it[1]) + '" loading="lazy" width="320" height="480">'
       : '<span class="noimg">' + esc(String(it[1]).slice(0, 4)) + '</span>';
-    return '<a class="card" href="/v/' + it[0] + '.html">'
+    return '<a class="card" href="/v/' + it[0] + '">'
       + '<div class="poster">' + pic + '</div>'
       + '<h3 class="ct">' + esc(it[1]) + '</h3>'
       + '<p class="cm">' + esc([it[2], it[3]].filter(Boolean).join(' · ')) + '</p></a>';
