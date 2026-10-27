@@ -34,9 +34,9 @@ function parseSources(from, urls) {
       eps: eps
     });
   }
-  // 暴风（bfzym3u8）优先
+  // 金鹰（jinyingm3u8）优先：暴风 CDN 对部分浏览器环境不返回 CORS 头
   out.sort(function (a, b) {
-    const rank = function (k) { return k === 'bfzym3u8' ? 0 : (k === 'jinyingm3u8' ? 1 : 2); };
+    const rank = function (k) { return k === 'jinyingm3u8' ? 0 : (k === 'bfzym3u8' ? 1 : 2); };
     return rank(a.key) - rank(b.key);
   });
   return out;

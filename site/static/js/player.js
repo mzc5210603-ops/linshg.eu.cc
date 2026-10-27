@@ -30,6 +30,7 @@
   var fullBtn = $('#pFull');
 
   var hls = null;
+  var netRetry = 0;
   var curSrc = 0;
   var curEp = 0;
   var rates = [1, 1.25, 1.5, 2, 0.75];
@@ -55,6 +56,7 @@
 
   function playUrl(url) {
     setLoading(true);
+    netRetry = 0;
     destroyHls();
     if (window.Hls && window.Hls.isSupported()) {
       hls = new window.Hls({
@@ -72,7 +74,13 @@
       hls.on(window.Hls.Events.ERROR, function (e, data) {
         if (!data || !data.fatal) return;
         if (data.type === window.Hls.ErrorTypes.NETWORK_ERROR) {
-          hls.startLoad();
+          netRetry++;
+          if (netRetry > 2) {
+            // 网络持续失败（如源站 CORS 拒绝），切换下一个播放源
+            nextSource();
+          } else {
+            hls.startLoad();
+          }
         } else if (data.type === window.Hls.ErrorTypes.MEDIA_ERROR) {
           hls.recoverMediaError();
         } else {
