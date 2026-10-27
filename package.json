@@ -1,9 +1,0 @@
-{
-  "name": "halframe",
-  "version": "1.0.0",
-  "private": true,
-  "description": "HALFFRAME static movie site",
-  "scripts": {
-    "build": "node site/build.js"
-  }
-}
